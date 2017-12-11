@@ -1,0 +1,72 @@
+const http = require("http");
+const path = require("path");
+const fs = require("fs");
+const app_port = 9000;
+const app_host = '192.168.0.3';
+
+http.createServer(function(req, res) {
+
+  //TEST 1: works with default mtcp but fails with eventfd patch
+  res.write("Hello world!:9000");
+  res.end();
+
+
+/*
+  //TEST 2: works with default mtcp but fails with eventfd patch
+  setTimeout(function () {
+    console.log('boo')
+    res.write("Hello world!: 9000");
+    res.end();
+  }, 100);
+*/
+
+
+
+/*
+  //TEST 3: works with default mtcp but fails with eventfd patch
+  const filename = path.join(process.cwd(), "index.html");
+  const fd = fs.openSync(filename, 'r');
+  const bufferSize = 1024;
+  var buffer = new Buffer(bufferSize);
+
+  var leftOver = '';
+  var clientdata = '';
+  var read, line, idxStart, idx;
+  while ((read = fs.readSync(fd, buffer, 0, bufferSize, null)) !== 0) {
+    leftOver += buffer.toString('utf8', 0, read);
+    clientdata += leftOver;
+  }
+
+  res.write(clientdata);
+  res.end();
+*/
+
+
+/*
+  //TEST 4: readFile() - asynchronous call
+  const filename = path.join(process.cwd(), "index.html");
+
+  fs.readFile(filename, function(err, data) {
+   res.write(data);
+   res.end();
+  });
+*/
+
+
+/*
+  //TEST 5: fs.open()
+  const filename = path.join(process.cwd(), "index.html");
+  fs.open(filename, "a+", function(err, fd) {
+     console.log('File is opened with fd:' + fd); 
+     res.write("File opened:" + fd);
+     res.end();
+  });
+*/
+
+}).listen({
+  host: app_host,
+  port: app_port
+
+}, function() {
+  console.log('Server running at port ' + app_port);
+});
