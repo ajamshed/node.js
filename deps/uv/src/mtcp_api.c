@@ -31,8 +31,8 @@ int node_mtcp_init_wrapper()
 		ret = -1;
 	}
 
-	in_addr_t daddr = inet_addr("192.168.0.4");
-	in_port_t dport = htons(27017);
+	in_addr_t daddr = inet_addr("192.168.0.13"); /* TODO: FIXME - Should only be needed for multi-process/cluster mode */
+	in_port_t dport = htons(27017);		    /* TODO: FIXME - Migrate the code to a better location */
 	mtcp_init_rss(mctx, INADDR_ANY, 1, daddr, dport);
 
 	fprintf(stderr, "node_mtcp_init_port() success\n");
